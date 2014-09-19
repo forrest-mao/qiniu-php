@@ -3,7 +3,7 @@ namespace Qiniu\Common;
 
 final class Config
 {
-    public const $SDK_VER = "6.1.9";
+    public const $SDK_VER = '7.0.0';
 
     public const $IO_HOST  = 'http://iovip.qbox.me';
     public const $RS_HOST  = 'http://rs.qbox.me';
