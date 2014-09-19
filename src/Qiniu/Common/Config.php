@@ -14,9 +14,11 @@ final class Config
     public const $UPLT_HOST = 'uplt.qiniu.com'
     public const $UPBACKUP_HOST = 'upload.qiniu.com'
 
-    public function userAgent()
+    public static $defaultHost = $UPAUTO_HOST
+
+    public static function userAgent()
     {
-        $sdkInfo = "QiniuPHP/$SDK_VER";
+        $sdkInfo = "QiniuPHP/" . self::$SDK_VER;
 
         $systemInfo = php_uname("s");
         $machineInfo = php_uname("m");

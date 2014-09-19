@@ -5,14 +5,12 @@ use Qiniu\Common\Auth;
 
 final class Bucket
 {
-    private Auth $auth;
+    private $auth;
 
-    public functon __construct($auth)
+    public function __construct(Auth $auth)
     {
-        this->$auth = $auth;
+        $this->$auth = $auth;
     }
 
 
 }
-
-?>
