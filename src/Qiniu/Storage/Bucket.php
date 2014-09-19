@@ -11,6 +11,4 @@ final class Bucket
     {
         $this->$auth = $auth;
     }
-
-
 }

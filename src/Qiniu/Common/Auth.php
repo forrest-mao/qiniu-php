@@ -62,4 +62,3 @@ final class Auth
         return $auth === $token;
     }
 }
-?>

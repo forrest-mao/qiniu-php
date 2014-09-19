@@ -10,5 +10,7 @@ before_script:
   - export QINIU_BUCKET_NAME="phpsdk"
   - export QINIU_KEY_NAME="file_name"
   - export QINIU_TEST_ENV="travis"
+  - pyrus install pear/PHP_CodeSniffer
+  - phpenv rehash
 script:
   - cd tests; phpunit .
