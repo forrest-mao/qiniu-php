@@ -1,11 +1,11 @@
 <?php
-namespace Qiniu\Common;
+namespace Qiniu\Common\Utils;
 
-function urlSafeBase64Encode($str) // URLSafeBase64Encode
+function urlSafeBase64Encode($data)
 {
     $find = array('+', '/');
     $replace = array('-', '_');
-    return str_replace($find, $replace, base64_encode($str));
+    return str_replace($find, $replace, base64_encode($data));
 }
 
 
