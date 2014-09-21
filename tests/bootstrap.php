@@ -2,11 +2,14 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use Qiniu\Common\Auth;
+
 $accessKey = getenv("QINIU_ACCESS_KEY");
 $secretKey = getenv("QINIU_SECRET_KEY");
 
 $dummyAccessKey = 'abcdefghklmnopq';
 $dummySecretKey = '1234567890';
+$dummyAuth = new Auth($dummyAccessKey, $dummySecretKey);
 
 $tid = getenv("TRAVIS_JOB_NUMBER");
 

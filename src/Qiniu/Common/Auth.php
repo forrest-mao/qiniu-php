@@ -73,11 +73,10 @@ final class Auth
         $policy = null,
         $strictPolicy = true
     ) {
-
         $deadline = time() + expires;
-        $scope = $bucket
-        if ($key) {
-            $scope .= ':' + $key
+        $scope = $bucket;
+        if ($key != null) {
+            $scope .= ':' + $key;
         }
         $args = array('scope' => $scope, 'deadline' => $deadline);
         self::copyPolicy($args, $policy, $strictPolicy);
@@ -106,8 +105,8 @@ final class Auth
         'persistentPipeline',
     );
 
-    private static deprecatedPolicyFields = array(
-        'asyncOps'
+    private static $deprecatedPolicyFields = array(
+        'asyncOps',
     );
 
     private static function copyPolicy($args, $policy, $strictPolicy)
