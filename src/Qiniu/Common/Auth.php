@@ -1,7 +1,7 @@
 <?php
 namespace Qiniu\Common;
 
-use Qiniu\Common\Utils;
+use Qiniu\Common\Base64;
 
 final class Auth
 {
@@ -14,22 +14,21 @@ final class Auth
         $this->secretKey = $secretKey;
     }
 
-    public function token($data) // => $token
+    public function token($data)
     {
         $hmac = hash_hmac('sha1', $data, $this->secretKey, true);
-        return $this->accessKey . ':' . Utils\urlSafeBase64Encode($hmac);
+        return $this->accessKey . ':' . Base64::urlSafeEncode($hmac);
     }
 
-    public function tokenWithData($data) // => $token
+    public function tokenWithData($data)
     {
-        $data = Utils\urlSafeBase64Encode($data);
+        $data = Base64::urlSafeEncode($data);
         return $this->token($data) . ':' . $data;
     }
 
-    public function tokenOfRequest($req, $incbody) // => ($token, $error)
+    public function tokenOfRequest($urlString, $body, $contentType = null)
     {
-        $url = $req->URL;
-        $url = parse_url($url['path']);
+        $url = parse_url($urlString);
         $data = '';
         if (isset($url['path'])) {
             $data = $url['path'];
@@ -39,27 +38,16 @@ final class Auth
         }
         $data .= "\n";
 
-        if ($incbody) {
-            $data .= $req->Body;
+        if ($body != null && $contentType == 'application/x-www-form-urlencoded') {
+            $data .= $body;
         }
         return $this->token($data);
     }
 
-    public function verifyCallback($auth, $url, $body) // ==> bool
+    public function verifyCallback($originAuthorization, $url, $body)
     {
-        $url = parse_url($url);
-        $data = '';
-        if (isset($url['path'])) {
-            $data = $url['path'];
-        }
-        if (isset($url['query'])) {
-            $data .= '?' . $url['query'];
-        }
-        $data .= "\n";
-
-        $data .= $body;
-        $token = 'QBox ' . $this->Sign($data);
-        return $auth === $token;
+        $authorization = 'QBox ' . $this->tokenOfRequest($url, $body, 'application/x-www-form-urlencoded');
+        return $originAuthorization === $authorization;
     }
 
     public function privateDownloadUrl($baseUrl, $expires = 3600)
@@ -84,57 +72,46 @@ final class Auth
         $expires = 3600,
         $policy = null,
         $strictPolicy = true
-    ) { // => token
+    ) {
 
         $deadline = time() + expires;
+        $scope = $bucket
+        if ($key) {
+            $scope .= ':' + $key
+        }
+        $args = array('scope' => $scope, 'deadline' => $deadline);
+        self::copyPolicy($args, $policy, $strictPolicy);
+        $b = json_encode($args);
+        return $this->tokenWithData($b);
+    }
 
-        $policy = array('scope' => $this->Scope, 'deadline' => $deadline);
-        if (!empty($this->CallbackUrl)) {
-            $policy['callbackUrl'] = $this->CallbackUrl;
-        }
-        if (!empty($this->CallbackBody)) {
-            $policy['callbackBody'] = $this->CallbackBody;
-        }
-        if (!empty($this->ReturnUrl)) {
-            $policy['returnUrl'] = $this->ReturnUrl;
-        }
-        if (!empty($this->ReturnBody)) {
-            $policy['returnBody'] = $this->ReturnBody;
-        }
+    private static $policyFields = array(
+        'callbackUrl',
+        'callbackBody',
+        'callbackHost',
 
-        if (!empty($this->EndUser)) {
-            $policy['endUser'] = $this->EndUser;
-        }
-        if (!empty($this->InsertOnly)) {
-            $policy['exclusive'] = $this->InsertOnly;
-        }
-        if (!empty($this->DetectMime)) {
-            $policy['detectMime'] = $this->DetectMime;
-        }
-        if (!empty($this->FsizeLimit)) {
-            $policy['fsizeLimit'] = $this->FsizeLimit;
-        }
-        if (!empty($this->SaveKey)) {
-            $policy['saveKey'] = $this->SaveKey;
-        }
-        if (!empty($this->PersistentOps)) {
-            $policy['persistentOps'] = $this->PersistentOps;
-        }
-        if (!empty($this->PersistentPipeline)) {
-            $policy['persistentPipeline'] = $this->PersistentPipeline;
-        }
-        if (!empty($this->PersistentNotifyUrl)) {
-            $policy['persistentNotifyUrl'] = $this->PersistentNotifyUrl;
-        }
-        if (!empty($this->FopTimeout)) {
-            $policy['fopTimeout'] = $this->FopTimeout;
-        }
-        if (!empty($this->MimeLimit)) {
-            $policy['mimeLimit'] = $this->MimeLimit;
-        }
+        'returnUrl',
+        'returnBody',
 
+        'endUser',
+        'saveKey',
+        'insertOnly',
 
-        $b = json_encode($policy);
-        return Qiniu_SignWithData($mac, $b);
+        'detectMime',
+        'mimeLimit',
+        'fsizeLimit',
+
+        'persistentOps',
+        'persistentNotifyUrl',
+        'persistentPipeline',
+    );
+
+    private static deprecatedPolicyFields = array(
+        'asyncOps'
+    );
+
+    private static function copyPolicy($args, $policy, $strictPolicy)
+    {
+
     }
 }
