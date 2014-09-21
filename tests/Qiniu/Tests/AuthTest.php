@@ -20,39 +20,32 @@ class AuthTest extends \PHPUnit_Framework_TestCase
 
     public function testToken()
     {
-        $this->assertEquals(1, 1);
+        global $dummyAuth;
+        $token = $dummyAuth->token('test');
+        $this->assertEquals($token, 'abcdefghklmnopq:mSNBTR7uS2crJsyFr2Amwv1LaYg=');
     }
 
     public function testTokenWithData()
     {
-
+        global $dummyAuth;
+        $token = $dummyAuth->tokenWithData('test');
+        $this->assertEquals($token, 'abcdefghklmnopq:-jP8eEV9v48MkYiBGs81aDxl60E=:dGVzdA==');
     }
 
     public function testTokenOfRequest()
     {
+        global $dummyAuth;
+        $token = $dummyAuth->tokenOfRequest('http://www.qiniu.com?go=1', 'test', '');
+        $this->assertEquals($token, 'abcdefghklmnopq:cFyRVoWrE3IugPIMP5YJFTO-O-Y=');
+
+        $token = $dummyAuth->tokenOfRequest('http://www.qiniu.com?go=1', 'test', 'application/x-www-form-urlencoded');
+        $this->assertEquals($token, 'abcdefghklmnopq:svWRNcacOE-YMsc70nuIYdaa1e4=');
+    }
+
+    public function testDeprecatedPolicy()
+    {
 
     }
-    // public function testEncode()
-    // {
-    //     $cases = array(
-    //         'abc' => 'YWJj',
-    //         'abc0=?e' => 'YWJjMD0_ZQ=='
-    //     );
-    //     foreach ($cases as $k => $v) {
-    //         $v1 = Qiniu_Encode($k);
-    //         $this->assertEquals($v, $v1);
-    //     }
-    // }
 
-    // public function testVerifyCallback()
-    // {
-    //     initKeys();
-    //     $mac1 = Qiniu_RequireMac(null);
-    //     $auth = 'QBox Vhiv6a22kVN_zhtetbPNeG9sY3JUL1HG597EmBwQ:JrRyg9So6DNrNDY5qj1sygt0SmQ=';
-    //     $url = 'http://rs.qbox.me/batch';
-    //     $body = 'op=/delete/cGhwc2RrOnRlc3RPcDI=&op=/delete/cGhwc2RrOnRlc3RPcDM=&op=/delete/cGhwc2RrOnRlc3RPcDQ=';
-    //     $pass = $mac1->VerifyCallback($auth, $url, $body);
-    //     $this->assertTrue($pass);
-    // }
 }
 }
