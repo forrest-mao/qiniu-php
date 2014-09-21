@@ -51,9 +51,14 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($url, $expect);
     }
 
+    /**
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage asyncOps has deprecated
+     */
     public function testDeprecatedPolicy()
     {
-
+        global $dummyAuth;
+        $token = $dummyAuth->uploadToken('1', null, 3600, array('asyncOps'=> 1));
     }
 
     public function testUploadToken()

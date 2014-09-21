@@ -73,7 +73,7 @@ final class Auth
         $policy = null,
         $strictPolicy = true
     ) {
-        $deadline = time() + expires;
+        $deadline = time() + $expires;
         $scope = $bucket;
         if ($key != null) {
             $scope .= ':' + $key;
@@ -85,32 +85,42 @@ final class Auth
     }
 
     private static $policyFields = array(
-        'callbackUrl',
-        'callbackBody',
-        'callbackHost',
+        'callbackUrl' => true,
+        'callbackBody' => true,
+        'callbackHost' => true,
 
-        'returnUrl',
-        'returnBody',
+        'returnUrl' => true,
+        'returnBody' => true,
 
-        'endUser',
-        'saveKey',
-        'insertOnly',
+        'endUser' => true,
+        'saveKey' => true,
+        'insertOnly' => true,
 
-        'detectMime',
-        'mimeLimit',
-        'fsizeLimit',
+        'detectMime' => true,
+        'mimeLimit' => true,
+        'fsizeLimit' => true,
 
-        'persistentOps',
-        'persistentNotifyUrl',
-        'persistentPipeline',
+        'persistentOps' => true,
+        'persistentNotifyUrl' => true,
+        'persistentPipeline' => true,
     );
 
     private static $deprecatedPolicyFields = array(
-        'asyncOps',
+        'asyncOps' => true,
     );
 
-    private static function copyPolicy($args, $policy, $strictPolicy)
+    private static function copyPolicy($policy, $originPolicy, $strictPolicy)
     {
-
+        if ($originPolicy == null) {
+            return;
+        }
+        foreach ($originPolicy as $key => $value) {
+            if (self::$deprecatedPolicyFields[$key]) {
+                throw new \InvalidArgumentException("{$key} has deprecated");
+            }
+            if (!$strictPolicy || self::$policyFields[$key]){
+                $policy[$key] = $value;
+            }
+        }
     }
 }
