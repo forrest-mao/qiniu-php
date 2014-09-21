@@ -5,7 +5,7 @@ namespace Qiniu\Common
     function time()
     {
         return isset($_SERVER['override_qiniu_auth_time'])
-            ? strtotime('Jan 2, 2006 15:04:05 MST')
+            ? 1234567890
             : \time();
     }
 }
@@ -42,7 +42,21 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($token, 'abcdefghklmnopq:svWRNcacOE-YMsc70nuIYdaa1e4=');
     }
 
+    public function testPrivateDownloadUrl()
+    {
+        global $dummyAuth;
+        $_SERVER['override_qiniu_auth_time'] = true;
+        $url =  $dummyAuth->privateDownloadUrl('http://www.qiniu.com?go=1');
+        $expect = 'http://www.qiniu.com?go=1&e=1234571490&token=abcdefghklmnopq:8vzBeLZ9W3E4kbBLFLW0Xe0u7v4=';
+        $this->assertEquals($url, $expect);
+    }
+
     public function testDeprecatedPolicy()
+    {
+
+    }
+
+    public function testUploadToken()
     {
 
     }
