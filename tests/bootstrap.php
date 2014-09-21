@@ -9,7 +9,6 @@ $secretKey = getenv("QINIU_SECRET_KEY");
 
 $dummyAccessKey = 'abcdefghklmnopq';
 $dummySecretKey = '1234567890';
-$dummyAuth = new Auth(dummyAccessKey, dummySecretKey);
 
 $tid = getenv("TRAVIS_JOB_NUMBER");
 

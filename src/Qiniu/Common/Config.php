@@ -14,7 +14,9 @@ final class Config
     public const $UPLT_HOST = 'http://uplt.qiniu.com';
     public const $UPBACKUP_HOST = 'http://upload.qiniu.com';
 
-    #public static $defaultHost = $UPAUTO_HOST;
+    public const $BLOCK_SIZE = 4 * 1024 * 1024;
+
+    public static $defaultHost = 'http://up.qiniu.com';
 
     public static function userAgent()
     {

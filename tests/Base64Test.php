@@ -1,14 +1,13 @@
 <?php
 
-use Qiniu\Common\Utils;
+use Qiniu\Common\Base64;
 
 class UtilsTest extends PHPUnit_Framework_TestCase
 {
     public function testUrlSafeBase64()
     {
         $a = '你好';
-        $b = Utils\urlSafeBase64Encode($a);
-        $this->assertEquals($a, Utils\urlSafeBase64Decode($b));
+        $b = Base64::urlSafeEncode($a);
+        $this->assertEquals($a, Base64::urlSafeDecode($b));
     }
-
 }
