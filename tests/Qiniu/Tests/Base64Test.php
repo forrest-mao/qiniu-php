@@ -1,11 +1,11 @@
 <?php
-namespace Qiniu;
+namespace Qiniu\Tests;
 
 use Qiniu\Common\Base64;
 
-class UtilsTest extends \PHPUnit_Framework_TestCase
+class Base64Test extends \PHPUnit_Framework_TestCase
 {
-    public function testUrlSafeBase64()
+    public function testUrlSafe()
     {
         $a = '你好';
         $b = Base64::urlSafeEncode($a);

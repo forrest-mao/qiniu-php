@@ -1,15 +1,37 @@
 <?php
-namespace Qiniu;
+// Hack to override the time returned from the S3SignatureV4
+namespace Qiniu\Common
+{
+    function time()
+    {
+        return isset($_SERVER['override_qiniu_auth_time'])
+            ? strtotime('Jan 2, 2006 15:04:05 MST')
+            : \time();
+    }
+}
 
-use Qiniu\Common\Utils;
+
+namespace Qiniu\Tests
+{
+use Qiniu\Common\Auth;
 
 class AuthTest extends \PHPUnit_Framework_TestCase
 {
-    public function testA()
+
+    public function testToken()
     {
         $this->assertEquals(1, 1);
     }
 
+    public function testTokenWithData()
+    {
+
+    }
+
+    public function testTokenOfRequest()
+    {
+
+    }
     // public function testEncode()
     // {
     //     $cases = array(
@@ -32,4 +54,5 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     //     $pass = $mac1->VerifyCallback($auth, $url, $body);
     //     $this->assertTrue($pass);
     // }
+}
 }
