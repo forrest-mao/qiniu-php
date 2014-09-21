@@ -1,8 +1,9 @@
 <?php
+namespace Qiniu;
 
 use Qiniu\Common\Utils;
 
-class AuthTest extends PHPUnit_Framework_TestCase
+class AuthTest extends \PHPUnit_Framework_TestCase
 {
     public function testA()
     {
@@ -31,5 +32,4 @@ class AuthTest extends PHPUnit_Framework_TestCase
     //     $pass = $mac1->VerifyCallback($auth, $url, $body);
     //     $this->assertTrue($pass);
     // }
-
 }

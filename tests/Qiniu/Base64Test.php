@@ -1,8 +1,9 @@
 <?php
+namespace Qiniu;
 
 use Qiniu\Common\Base64;
 
-class UtilsTest extends PHPUnit_Framework_TestCase
+class UtilsTest extends \PHPUnit_Framework_TestCase
 {
     public function testUrlSafeBase64()
     {

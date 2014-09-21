@@ -12,5 +12,6 @@ before_script:
   - export QINIU_TEST_ENV="travis"
   - composer install --prefer-source
 script:
-  - ./vendor/bin/phpcs --standard=PSR2 .
+  - ./vendor/bin/phpcs --standard=PSR2 src
+  - ./vendor/bin/phpcs --standard=PSR2 tests
   - ./vendor/bin/phpunit
