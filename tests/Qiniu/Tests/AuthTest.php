@@ -63,8 +63,11 @@ class AuthTest extends \PHPUnit_Framework_TestCase
 
     public function testUploadToken()
     {
-
+        global $dummyAuth;
+        $_SERVER['override_qiniu_auth_time'] = true;
+        $token = $dummyAuth->uploadToken('1', '2', 3600, array('endUser'=> 'y'));
+        $expect = 'abcdefghklmnopq:sxuXJt0ObIm33J_kBT32hw0FEJo=:eyJzY29wZSI6IjEyIiwiZGVhZGxpbmUiOjEyMzQ1NzE0OTB9';
+        $this->assertEquals($token, $expect);
     }
-
 }
 }

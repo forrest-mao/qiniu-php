@@ -85,28 +85,28 @@ final class Auth
     }
 
     private static $policyFields = array(
-        'callbackUrl' => true,
-        'callbackBody' => true,
-        'callbackHost' => true,
+        'callbackUrl',
+        'callbackBody',
+        'callbackHost',
 
-        'returnUrl' => true,
-        'returnBody' => true,
+        'returnUrl',
+        'returnBody',
 
-        'endUser' => true,
-        'saveKey' => true,
-        'insertOnly' => true,
+        'endUser',
+        'saveKey',
+        'insertOnly',
 
-        'detectMime' => true,
-        'mimeLimit' => true,
-        'fsizeLimit' => true,
+        'detectMime',
+        'mimeLimit',
+        'fsizeLimit',
 
-        'persistentOps' => true,
-        'persistentNotifyUrl' => true,
-        'persistentPipeline' => true,
+        'persistentOps',
+        'persistentNotifyUrl',
+        'persistentPipeline',
     );
 
     private static $deprecatedPolicyFields = array(
-        'asyncOps' => true,
+        'asyncOps',
     );
 
     private static function copyPolicy($policy, $originPolicy, $strictPolicy)
@@ -115,10 +115,10 @@ final class Auth
             return;
         }
         foreach ($originPolicy as $key => $value) {
-            if (self::$deprecatedPolicyFields[$key]) {
+            if (in_array($key, self::$deprecatedPolicyFields)) {
                 throw new \InvalidArgumentException("{$key} has deprecated");
             }
-            if (!$strictPolicy || self::$policyFields[$key]){
+            if (!$strictPolicy || in_array($key, self::$policyFields)) {
                 $policy[$key] = $value;
             }
         }
