@@ -15,11 +15,11 @@ final class Bucket
 
     public function buckets()
     {
-        $url = "{}"
+        $url = "{Config::$RS_HOST}/buckets"
+
     }
         // def buckets(self):
         // url = 'http://{0}/buckets'.format(config.RS_HOST)
         // r = self.__post(url)
         // return _ret(r)
-
 }

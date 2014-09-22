@@ -1,19 +1,23 @@
 <?php
 
 namespace Qiniu\Common;
+
 use Qiniu\Common\Config;
 
 final class Etag
 {
-    private static function PackArray($v, $a) {
-        return call_user_func_array('pack', array_merge(array($v),(array)$a));
+    private static function packArray($v, $a)
+    {
+        return call_user_func_array('pack', array_merge(array($v), (array)$a));
     }
 
-    private static function blockCount($fsize) {
+    private static function blockCount($fsize)
+    {
         return (($fsize + (Config::BLOCK_SIZE - 1)) / Config::BLOCK_SIZE);
     }
 
-    private static function CalcSha1($fhandler) {
+    private static function calcSha1($fhandler)
+    {
         $fdata = fread($fhandler, Config::BLOCK_SIZE);
         $sha1Str = sha1($fdata, true);
         $err = error_get_last();
@@ -25,7 +29,8 @@ final class Etag
     }
 
 
-    public static function sum($filename) {
+    public static function sum($filename)
+    {
         $fhandler = fopen($filename, 'r');
         $err = error_get_last();
         if ($err != null) {
