@@ -11,7 +11,6 @@ namespace Qiniu\Common
     }
 }
 
-
 namespace Qiniu\Tests
 {
     use Qiniu\Common\Auth;

@@ -6,6 +6,7 @@ use Qiniu\Common\Auth;
 
 $accessKey = getenv("QINIU_ACCESS_KEY");
 $secretKey = getenv("QINIU_SECRET_KEY");
+$testAuth = new Auth($accessKey, $secretKey);
 
 $dummyAccessKey = 'abcdefghklmnopq';
 $dummySecretKey = '1234567890';
