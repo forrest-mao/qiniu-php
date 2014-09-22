@@ -3,20 +3,20 @@ namespace Qiniu\Common;
 
 final class Config
 {
-    public const $SDK_VER = '7.0.0';
+    const SDK_VER = '7.0.0';
 
-    public const $IO_HOST  = 'http://iovip.qbox.me';
-    public const $RS_HOST  = 'http://rs.qbox.me';
-    public const $RSF_HOST = 'http://rsf.qbox.me';
+    const IO_HOST  = 'http://iovip.qbox.me';
+    const RS_HOST  = 'http://rs.qbox.me';
+    const RSF_HOST = 'http://rsf.qbox.me';
 
-    public const $UPAUTO_HOST = 'http://up.qiniu.com';
-    public const $UPDX_HOST = 'http://updx.qiniu.com';
-    public const $UPLT_HOST = 'http://uplt.qiniu.com';
-    public const $UPBACKUP_HOST = 'http://upload.qiniu.com';
+    const UPAUTO_HOST = 'http://up.qiniu.com';
+    const UPDX_HOST = 'http://updx.qiniu.com';
+    const UPLT_HOST = 'http://uplt.qiniu.com';
+    const UPBACKUP_HOST = 'http://upload.qiniu.com';
 
-    public const $BLOCK_SIZE = 4 * 1024 * 1024;
+    const BLOCK_SIZE = 4 * 1024 * 1024;
 
-    public static $defaultHost = 'http://up.qiniu.com';
+    public static $defaultHost = UPBACKUP_HOST;
 
     public static function userAgent()
     {

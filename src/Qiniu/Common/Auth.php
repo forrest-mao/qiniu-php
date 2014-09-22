@@ -123,4 +123,10 @@ final class Auth
             }
         }
     }
+
+    public function authorization($url, $body = null, $contentType = null)
+    {
+        $authorization = 'QBox ' . $this->tokenOfRequest($url, $body, $contentType);
+        return array('Authorization' => $authorization);
+    }
 }
