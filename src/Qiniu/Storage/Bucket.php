@@ -23,13 +23,7 @@ final class Bucket
         $request = $client->get('/buckets', $this->auth->authorization(Config::RS_HOST . '/buckets'));
         // Send the request and get the response
         $response = $request->send();
-        echo $response->getBody();
-        // >>> {"type":"User", ...
-        echo $response->getHeader('Content-Length');
-        return $response->getBody();
+
+        return json_decode($response->getBody());
     }
-        // def buckets(self):
-        // url = 'http://{0}/buckets'.format(config.RS_HOST)
-        // r = self.__post(url)
-        // return _ret(r)
 }
