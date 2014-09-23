@@ -16,11 +16,11 @@ final class Bucket
         $this->bucket = $bucket;
     }
 
-    public function buckets()
+    public static function buckets(Auth $auth)
     {
         $client = new Client(Config::RS_HOST);
         // Create a request with basic Auth
-        $request = $client->get('/buckets', $this->auth->authorization(Config::RS_HOST . '/buckets'));
+        $request = $client->get('/buckets', $auth->authorization(Config::RS_HOST . '/buckets'));
         // Send the request and get the response
         $response = $request->send();
 

@@ -9,7 +9,7 @@ class BucketTest extends \PHPUnit_Framework_TestCase
     {
         global $testAuth;
         global $bucketName;
-        $bucket = new Bucket($testAuth, $bucketName);
-        $this->assertTrue(in_array($bucketName, $bucket->buckets()));
+        $ret = Bucket::buckets($testAuth);
+        $this->assertTrue(in_array($bucketName, $ret));
     }
 }
