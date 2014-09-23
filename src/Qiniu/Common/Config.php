@@ -14,7 +14,7 @@ final class Config
     const UPLT_HOST = 'http://uplt.qiniu.com';
     const UPBACKUP_HOST = 'http://upload.qiniu.com';
 
-    const BLOCK_SIZE = 4 * 1024 * 1024;
+    const BLOCK_SIZE = 4194304; # 4*1024*1024
 
     public static $defaultHost = UPBACKUP_HOST;
 
